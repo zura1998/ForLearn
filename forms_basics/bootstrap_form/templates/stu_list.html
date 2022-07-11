@@ -8,6 +8,13 @@
     {% extends "base.html" %}
     {% block content %}
     <h1>There is student list </h1>
+        <ol>
+            {% for student in students %}
+            <li> {{student.name}}
+                <br>
+                {{student.email}} </li>
+            {% endfor %}}
+        </ol>
     {% endblock %}
 
 
