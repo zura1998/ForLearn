@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>This is my Project</h1><br>
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            {{error}}
+        {%endfor%}}
+    {%endwith%}}
+    <form method ="POST", enctype="multipart/form-data">
+
+
+        {{form.hidden_tag()}}
+        {{form.login.label}}
+        {{form.login}}
+        <br>
+        {{form.password.label}}
+        {{form.password}}
+        <br>
+        {{form.email.label}}
+        {{form.email}}
+        <br>
+        {{form.confirmpassword.label}}
+        {{form.confirmpassword}}
+        <br>
+        {{form.gender.label}}
+        {{form.gender}}
+<!--        {{form.submit.label}}-->
+        {{form.fileupload(accept=".png")}}
+        {{form.submit}}
+        <br>
+    </form>
+
+</body>
+</html>
