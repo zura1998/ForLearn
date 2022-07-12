@@ -16,7 +16,45 @@ db = SQLAlchemy(app)
 Migrate(app, db)
 
 
-class Student(db.Model):
+class BaseModel(db.Model):
+    """
+    This Class describe SQLAlchemy DB model with Basic CRUD functionality
+
+    atribs:
+        - id: primery key
+        - create
+        - update
+        - delete
+        - save
+        - read
+    """
+    id = db.Column(db.Integer, primary_key=True)
+
+    def create(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update_to_db(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod
+    def get_all(cls):
+        return cls.query.all()
+
+    def get_by_name(self, name):
+        return self.query.filter_by(name=name)
+
+
+class Student(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     email = db.Column(db.String(50))
@@ -26,17 +64,6 @@ class Student(db.Model):
         self.name = name
         self.email = email
         self.password = password
-
-    def post_to_db(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def delete_from_db(self):
-        db.session.delete(self)
-        db.session.commit()
-
-    def __repr__(self):
-        return f"Student {self.name} created"
 
 
 if not os.path.isfile("../stu.sqlite"):
