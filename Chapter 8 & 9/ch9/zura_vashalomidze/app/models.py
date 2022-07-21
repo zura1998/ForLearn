@@ -1,7 +1,7 @@
-from app.app import db
+from app import db
+import os
 
-
-class BaseModel(db.Model):
+class BaseModel():
     """
     This Class describe SQLAlchemy DB model with Basic CRUD functionality
 
@@ -13,7 +13,6 @@ class BaseModel(db.Model):
         - save
         - read
     """
-    id = db.Column(db.Integer, primary_key=True)
 
     def create(self, **kwargs):
         for key, value in kwargs.items():
@@ -39,7 +38,7 @@ class BaseModel(db.Model):
         return self.query.filter_by(name=name)
 
 
-class Student(BaseModel):
+class Student(db.Model, BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     email = db.Column(db.String(50))
@@ -49,3 +48,7 @@ class Student(BaseModel):
         self.name = name
         self.email = email
         self.password = password
+
+
+
+
